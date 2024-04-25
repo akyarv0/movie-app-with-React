@@ -3,7 +3,7 @@ import GoogleIcon from "../assets/icons/GoogleIcon";
 
 const Register = () => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center ">
       <div className="overflow-hidden flex-1 h-screen justify-center items-center dark:bg-gray-dark-main">
         <div className={`form-container mt-[5vh] w-[380px] h-[580px] `}>
           <form>
