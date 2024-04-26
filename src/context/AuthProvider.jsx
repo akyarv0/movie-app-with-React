@@ -1,9 +1,9 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import React from "react";
+import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut ,onAuthStateChanged} from "firebase/auth";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const AuthContext = createContext();
@@ -14,6 +14,9 @@ export const useAuthContext = () => {
 const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    userObserver();
+  }, []);
 
   const createUser = async (email, password) => {
     try {
@@ -57,6 +60,21 @@ const AuthProvider = ({ children }) => {
         // An error happened.
       });
   };
+
+  const userObserver = () => {onAuthStateChanged(auth, (user) => {
+    if (user) {
+    console.log("logged in");
+    const { displayName, email, photoURL } = user;
+    setCurrentUser({ displayName, email, photoURL });
+  
+  
+    } else {
+      console.log("logged out");
+      setCurrentUser(false);
+    }
+  })};
+  
+console.log(currentUser);
 
   const values = { currentUser, createUser, signIn, logOut };
 
