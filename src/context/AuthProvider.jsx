@@ -5,6 +5,7 @@ import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, signOut ,onAuthStateChanged, updateProfile} from "firebase/auth";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
+import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 
 const AuthContext = createContext();
 export const useAuthContext = () => {
@@ -76,10 +77,25 @@ const AuthProvider = ({ children }) => {
       setCurrentUser(false);
     }
   })};
+
+  const googleProvider = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+  .then((result) => {
+    navigate("/");
+    toastSuccessNotify("Sign In Successful");
+    
+  }).catch((error) => {
+    toastErrorNotify(error.message);
+  
+  });
+
+    
+  }
   
 console.log(currentUser);
 
-  const values = { currentUser, createUser, signIn, logOut };
+  const values = { currentUser, createUser, signIn, logOut, googleProvider };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
