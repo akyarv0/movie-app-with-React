@@ -11,7 +11,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const { currentUser } = useAuthContext
+  const { currentUser ,logOut} = useAuthContext
   // const currentUser = { displayName: "veysel" };
   // const currentUser = false
   return (<>
@@ -80,18 +80,19 @@ export default function Navbar() {
                     )}
                   </Menu.Item>
                   <Menu.Item>
-                    {({ active }) => (
-                      <span
-                   
-                        className={classNames(
-                          active ? "bg-gray-100" : "",
-                          "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
-                        )}
-                      >
-                        Sign out
-                      </span>
-                    )}
-                  </Menu.Item>
+                  {({ active }) => (
+                    <span
+                      role="button"
+                      onClick={() => logOut()}
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                      )}
+                    >
+                      Sign out
+                    </span>
+                  )}
+                </Menu.Item>
                 </Menu.Items>
               </Transition>
             </Menu>

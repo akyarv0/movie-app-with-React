@@ -3,7 +3,9 @@ import React from "react";
 import { createContext, useContext, useState, } from "react";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword ,signOut} from "firebase/auth";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
+
 
 const AuthContext = createContext();
 export const useAuthContext = () => {
@@ -22,9 +24,12 @@ const AuthProvider = ({ children }) => {
         password
       );
      navigate("/login");
+     toastSuccessNotify("Sign Up Successful");
+
       console.log(userCredential);
     } catch (error) {
       console.log(error);
+      toastErrorNotify(error.message);
     }
   };
   const signIn = async (email, password) => {
@@ -35,19 +40,28 @@ const AuthProvider = ({ children }) => {
         password
       );
      navigate("/");
+     toastSuccessNotify("Sign In Successful");
       console.log(userCredential);
     } catch (error) {
       console.log(error);
+      toastErrorNotify(error.message);
     }
   };
   
 
+  const logOut = () => {
+    signOut(auth)
+      .then(() => {
+        toastSuccessNotify("Logged out successfully");
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
+  const values = { currentUser, createUser, signIn, logOut };
 
-
-
-
-  const values = { currentUser,createUser ,signIn};
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 
