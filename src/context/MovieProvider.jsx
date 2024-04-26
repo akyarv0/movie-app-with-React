@@ -1,4 +1,4 @@
-import React, { Children, createContext, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
 
 const MovieContext = createContext
 
