@@ -3,8 +3,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import Switch from "./Switch";
 import avatar from "../assets/icons/avatar.png";
-import { AuthContext, useAuthContext } from "../context/AuthProvider";
-import { useContext } from "react";
+import {  useAuthContext } from "../context/AuthProvider";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
