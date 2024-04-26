@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, signOut ,onAuthStateChanged} from "firebase/auth";
+import { signInWithEmailAndPassword, signOut ,onAuthStateChanged, updateProfile} from "firebase/auth";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const AuthContext = createContext();
@@ -18,13 +18,16 @@ const AuthProvider = ({ children }) => {
     userObserver();
   }, []);
 
-  const createUser = async (email, password) => {
+  const createUser = async (email, password, displayName) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
+      await updateProfile(auth.currentUser, {
+        displayName: displayName,
+      })
       navigate("/login");
       toastSuccessNotify("Sign Up Successful");
 
