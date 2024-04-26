@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import GoogleIcon from "../assets/icons/GoogleIcon";
+import { useAuthContext } from "../context/AuthProvider";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const Register = () => {
   const [info, setInfo] = useState({
@@ -13,8 +15,12 @@ const Register = () => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
+  const { createUser } = useAuthContext();
+  const { email, password } = info;
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    createUser(email, password);
     console.log(info);
   };
   return (
