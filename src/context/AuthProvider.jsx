@@ -3,6 +3,7 @@ import React from "react";
 import { createContext, useContext, useState, } from "react";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const AuthContext = createContext();
 export const useAuthContext = () => {
@@ -26,8 +27,27 @@ const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const signIn = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+     navigate("/");
+      console.log(userCredential);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
-  const values = { currentUser,createUser };
+
+
+
+
+
+  const values = { currentUser,createUser ,signIn};
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 
