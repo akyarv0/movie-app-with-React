@@ -7,11 +7,11 @@ import MovieProvider from "./context/MovieProvider";
 
 const App = () => {
   return (
-    <div className="dark:bg-gray-dark ">
+    <div className="dark:bg-gray-dark-main min-h-screen">
       <AuthProvider>
         <MovieProvider>
-          <ToastContainer />
           <AppRouter />
+          <ToastContainer />
         </MovieProvider>
       </AuthProvider>
     </div>
