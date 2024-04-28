@@ -10,7 +10,7 @@ import {
   updateProfile,
 
 } from "firebase/auth";
-import { toastErrorNotify, toastSuccessNotify, toastWarnNotify } from "../helper/ToastNotify";
+import { toastErrorNotify, toastSuccessNotify, toastWarnNotify } from "../helpers/ToastNotify";
 import { GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
 
 const AuthContext = createContext();
@@ -19,7 +19,7 @@ export const useAuthContext = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("currentUser")) || false);
   const navigate = useNavigate();
   useEffect(() => {
     userObserver();
@@ -72,14 +72,21 @@ const AuthProvider = ({ children }) => {
   };
 
   const userObserver = () => {
+    //? Kullanıcının signin olup olmadığını takip eden ve kullanıcı değiştiğinde yeni kullanıcıyı response olarak dönen firebase metodu
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("logged in");
-        const { displayName, email, photoURL } = user;
-        setCurrentUser({ displayName, email, photoURL });
+        // console.log("logged in");
+        const { email, displayName, photoURL } = user;
+        setCurrentUser({ email, displayName, photoURL });
+        sessionStorage.setItem(
+          "currentUser",
+          JSON.stringify({ email, displayName, photoURL })
+        );
       } else {
-        console.log("logged out");
+        // User is signed out
         setCurrentUser(false);
+        sessionStorage.removeItem("currentUser");
+        // console.log("logged out");
       }
     });
   };

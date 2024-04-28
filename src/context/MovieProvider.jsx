@@ -27,7 +27,7 @@ const MovieProvider = ({ children }) => {
     getMovies(FEATURED_API);
   }, []);
 
-    console.log(movies);
+  //   console.log(movies);
   return (
     <MovieContext.Provider value={{ movies, loading, getMovies }}>
       {children}

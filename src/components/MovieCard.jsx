@@ -20,7 +20,7 @@ const MovieCard = ({ title, poster_path, vote_average, overview, id }) => {
   }
 
   return (
-    <div className="movie" id="container" onClick={() => navigate(`/movie/${id}`)}>
+    <div className="movie" id="container" onClick={() => navigate(`/details/${id}`)}>
       <img
         loading="lazy"
         src={poster_path ? IMG_API + poster_path : defaultImage}
