@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import GoogleIcon from "../assets/icons/GoogleIcon";
 import { useAuthContext } from "../context/AuthProvider";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 const Register = () => {
   const [info, setInfo] = useState({
